@@ -97,6 +97,9 @@ recipe.objcopy.dfu.pattern="{compiler.path}{compiler.elf2hex.cmd}" {compiler.elf
 ## Create output (iap file)
 recipe.objcopy.iap.pattern="{compiler.path}{compiler.elf2hex.cmd}" {compiler.elf2hex.bin.flags} {compiler.elf2hex.extra_flags} -R .boot "{build.path}/{build.project_name}.elf" "{build.path}/{build.project_name}.iap"
 
+## Create output (hex file)
+recipe.objcopy.hex.pattern="{compiler.path}{compiler.elf2hex.cmd}" {compiler.elf2hex.hex.flags} {compiler.elf2hex.extra_flags} -R .eeprom "{build.path}/{build.project_name}.elf" "{build.path}/{build.project_name}.hex"
+
 ## Append DFU suffix (dfu file)
 recipe.hooks.objcopy.postobjcopy.1.pattern="{compiler.platform.path}/{compiler.suffix.cmd}"  -v "{build.vid}" -p "{build.pid}" -d "{build.did}" -a "{build.path}/{build.project_name}.dfu"
 
@@ -104,8 +107,10 @@ recipe.hooks.objcopy.postobjcopy.1.pattern="{compiler.platform.path}/{compiler.s
 recipe.hooks.objcopy.postobjcopy.2.pattern="{compiler.platform.path}/{compiler.suffix.cmd}"  -v "{build.vid}" -p "{build.pid}" -d "{build.did}" -a "{build.path}/{build.project_name}.iap"
 
 ## Save hex
-recipe.output.tmp_file={build.project_name}.iap
-recipe.output.save_file={build.project_name}.{build.variant}.iap
+# recipe.output.tmp_file={build.project_name}.iap
+# recipe.output.save_file={build.project_name}.{build.variant}.iap
+recipe.output.tmp_file={build.project_name}.hex
+recipe.output.save_file={build.project_name}.{build.variant}.hex
 
 ## Compute size
 recipe.size.pattern="{compiler.path}{compiler.size.cmd}" -A "{build.path}/{build.project_name}.elf"
